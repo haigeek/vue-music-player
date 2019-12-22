@@ -3,14 +3,13 @@
         <header-temp @clickAbout="showAboutFun" @clickAlbum="showAlbumFun" @firstAlbum="showFirstAlbum"></header-temp>
         <player v-show="!showAbout" :albumName="this.albumName"></player>
         <about v-show="showAbout" @hiddenAbout="hiddenAbout"></about>
-        <footer-temp></footer-temp>
     </div>
 </template>
 
 <script>
     import HeaderTemp from './components/Header'
     import Player from './components/Player'
-    import FooterTemp from './components/Footer'
+    //import FooterTemp from './components/Footer'
     import About from './components/About'
 
     export default {
@@ -24,7 +23,7 @@
         components: {
             HeaderTemp,
             Player,
-            FooterTemp,
+            //FooterTemp,
             About
         },
         methods: {
