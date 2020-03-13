@@ -61,7 +61,7 @@ export default {
   watch: {
     albumName() {
       this.coverUrl =
-        "http://139.224.35.205/njlizhi/music/" + this.albumName + "/cover.jpg";
+        "http://127.0.0.1/njlizhi/music/" + this.albumName + "/cover.jpg";
       this.getSongs();
     }
   },
@@ -72,7 +72,7 @@ export default {
       if (this.albumName) {
         axios
           .get(
-            "http://139.224.35.205/njlizhi/studio_album/" +
+            "http://127.0.0.1/njlizhi/studio_album/" +
               this.albumName +
               ".json"
           )
@@ -88,12 +88,12 @@ export default {
           songDetail.title = data[i].title;
           songDetail.artist = data[i].artist;
           songDetail.src =
-            "http://139.224.35.205/njlizhi/music/" +
+            "http://127.0.0.1/njlizhi/music/" +
             this.albumName +
             "/" +
             data[i].src;
           songDetail.pic =
-            "http://139.224.35.205/njlizhi/music/" +
+            "http://127.0.0.1/njlizhi/music/" +
             this.albumName +
             "/" +
             data[i].pic;

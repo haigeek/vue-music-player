@@ -35,11 +35,11 @@ export default {
       types: [
         {
           text: "Audio-lab",
-          img: "http://139.224.35.205/njlizhi/music/F/cover.jpg"
+          img: "http://127.0.0.1/njlizhi/music/F/cover.jpg"
         },
         {
           text: "live",
-          img: "http://139.224.35.205/njlizhi/music/%E5%8C%97%E4%BA%AC%E4%B8%8D%E6%8F%92%E7%94%B5%E7%8E%B0%E5%9C%BA/cover.jpg"
+          img: "http://127.0.0.1/njlizhi/music/%E5%8C%97%E4%BA%AC%E4%B8%8D%E6%8F%92%E7%94%B5%E7%8E%B0%E5%9C%BA/cover.jpg"
         }
       ]
     };
@@ -56,12 +56,12 @@ export default {
     },
     getAlbum() {
       axios
-        .get("http://139.224.35.205/njlizhi/playlist" + ".json")
+        .get("http://127.0.0.1/njlizhi/playlist" + ".json")
         .then(this.getAlbumSuc);
     },
     getLiveAlbum() {
       axios
-        .get("http://139.224.35.205/njlizhi/liveplaylist" + ".json")
+        .get("http://127.0.0.1/njlizhi/liveplaylist" + ".json")
         .then(this.getLiveAlbumSuc);
     },
     getAlbumSuc(res) {
