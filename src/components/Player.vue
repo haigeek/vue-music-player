@@ -1,45 +1,33 @@
 <template>
-  <el-row>
-    <br>
-    <br>
-    <el-col :xs="24" :sm="24" :md="8" :lg="24" :xl="1" ><dir><br></dir></el-col>
-    <el-col :xs="24" :sm="24" :md="8" :lg="6" :xl="6" :offset="3">
-      <div class="grid-content">
-        <img
-          :src="coverUrl"
-          class="rounded mx-auto d-block"
-          height="300"
-          width="300"
-          alt="album cover"
-        />
-      </div>
-      <br>
-    </el-col>
-    
-    <el-col :xs="20" :sm="20" :md="12" :lg="6" :xl="6" :offset="2">
-      <div class="grid-content">
-       <aplayer
-          autoplay
-          shuffle
-          repeat="list"
-          :music="{
-                title: '你离开了南京，从此没有人和我说话',
-                artist: '李志',
-                src: 'http://47.100.177.143:8181/njlizhi/music/%E6%A2%B5%E9%AB%98%E5%85%88%E7%94%9F/%E6%9D%8E%E5%BF%97%20-%20%E4%BD%A0%E7%A6%BB%E5%BC%80%E4%BA%86%E5%8D%97%E4%BA%AC%EF%BC%8C%E4%BB%8E%E6%AD%A4%E6%B2%A1%E6%9C%89%E4%BA%BA%E5%92%8C%E6%88%91%E8%AF%B4%E8%AF%9D.mp3',
-                pic: 'http://47.100.177.143:8181/njlizhi/music/%E6%A2%B5%E9%AB%98%E5%85%88%E7%94%9F/cover.jpg'
-        }"
-          :list="songsArr"
-        />
-      </div>
-    </el-col>
-  </el-row>
-  
+  <van-row>
+    <van-col span="2"></van-col>
+    <van-col span="20">
+      <van-divider class="font">the album of {{this.albumName}} </van-divider>
+      <aplayer
+        class="van-tabbar--fixed"
+        autoplay
+        shuffle
+        repeat="list"
+        listFolded
+        :music="{
+      title: songsArr[0].title,
+      artist: songsArr[0].artist,
+      src: songsArr[0].src,
+      pic: coverUrl
+      }"
+        :list="songsArr"
+      />
+    </van-col>
+
+    <van-col span="2"></van-col>
+  </van-row>
 </template>
 
 
 <script>
 import axios from "axios";
-import Aplayer from "vue-aplayer";
+// import Aplayer from "vue-aplayer";
+const Aplayer = ()=>import('vue-aplayer')
 export default {
   name: "Player",
   components: {
@@ -51,8 +39,17 @@ export default {
       coverUrl: "",
       srcName: "",
       volume: 1,
+      autoplay: true,
       muted: false,
-      alubArr: []
+      listFolded: true,
+      mini: false,
+      alubArr: [],
+      title: null,
+      artist: "无艺术家",
+      src: "" ,
+      pic: "",
+      albumName: "我爱南京"
+
     };
   },
   props: {
@@ -64,17 +61,18 @@ export default {
   watch: {
     albumName() {
       this.coverUrl =
-        "http://47.100.177.143:8181/njlizhi/music/" + this.albumName + "/cover.jpg";
+        "http://139.224.35.205/njlizhi/music/" + this.albumName + "/cover.jpg";
       this.getSongs();
     }
   },
-  
+
   methods: {
     getSongs() {
+      var arr = Object.keys(this.albumName);
       if (this.albumName) {
         axios
           .get(
-            "http://47.100.177.143:8181/njlizhi/studio_album/" +
+            "http://139.224.35.205/njlizhi/studio_album/" +
               this.albumName +
               ".json"
           )
@@ -90,12 +88,12 @@ export default {
           songDetail.title = data[i].title;
           songDetail.artist = data[i].artist;
           songDetail.src =
-            "http://47.100.177.143:8181/njlizhi/music/" +
+            "http://139.224.35.205/njlizhi/music/" +
             this.albumName +
             "/" +
             data[i].src;
           songDetail.pic =
-            "http://47.100.177.143:8181/njlizhi/music/" +
+            "http://139.224.35.205/njlizhi/music/" +
             this.albumName +
             "/" +
             data[i].pic;
@@ -112,5 +110,8 @@ export default {
 };
 </script>
 <style>
-
+.font {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
 </style>

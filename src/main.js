@@ -1,18 +1,37 @@
 import Vue from 'vue'
 import App from './App.vue'
-import {Col,Row,Header,Container,Menu,Submenu,MenuItem} from 'element-ui';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import 'vant/lib/index.css'
+import { Col, Row } from 'vant';
+import { Divider } from 'vant';
+import { Card } from 'vant';
+import { Grid, GridItem } from 'vant';
+import { Image } from 'vant';
+import { ActionSheet } from 'vant';
+import { Toast } from 'vant';
 
+
+Vue.use(Toast);
+
+Vue.use(ActionSheet);
+
+Vue.use(Image);
+
+Vue.use(Grid);
+Vue.use(GridItem);
+
+Vue.use(Card);
+
+
+
+Vue.use(Divider);
+
+
+Vue.use(Col);
+Vue.use(Row);
 Vue.config.productionTip = false
-Vue.use(Menu);
-Vue.use(Submenu);
-Vue.use(MenuItem);
-Vue.use(Container);
-Vue.use(Header);
+
 Vue.use(Row);
 Vue.use(Col)
-// Vue.use(ElementUI);
 
 new Vue({
   render: h => h(App),

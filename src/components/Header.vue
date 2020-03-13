@@ -1,44 +1,47 @@
 <template>
-<el-container >
-    <el-header>
-      <el-row>
-        <el-col :span="24">
-          <div>
-            <el-menu class="el-menu-demo" mode="horizontal" >
-              <el-menu-item index="20">njlizhi</el-menu-item>
-              <el-submenu index="2-1">
-                <template slot="title">Audio-Lab</template>
-                <el-menu-item index="4-1"
-                  v-for="(item, index) in albumList"
-                  :key="index"
-                  @click="handleClickAlbum(item)"
-                >{{item}}</el-menu-item>
-              </el-submenu>
-
-              <el-submenu index="3-1">
-                <template slot="title">Live</template>
-                <el-menu-item index="4-2" v-for="(item2, index) in liveAlbumList "
-                  :key="index"
-                  @click="handleClickAlbum(item2)"
-                >{{item2}}</el-menu-item>
-              </el-submenu>
-            </el-menu>
-          </div>
-        </el-col>
-      </el-row>
-    </el-header>
-</el-container>
+  <van-row>
+    <van-col span="2"></van-col>
+    <van-col span="20" class="font">
+      <h1 align="center">LZ Club</h1>
+      <van-grid :column-num="2">
+        <van-grid-item v-for="(value,index) in types" :key="index" :text="value.text">
+          <van-image :src="value.img" @click="onActive(value.text)" />
+          <p class="van-grid-item__text">{{value.text}}</p>
+        </van-grid-item>
+      </van-grid>
+      <van-action-sheet
+        v-model="show"
+        :actions="actions"
+        cancel-text="取消"
+        @cancel="onCancel"
+        @select="onSelect"
+      />
+    </van-col>
+    <van-col span="2"></van-col>
+  </van-row>
 </template>
 
 <script>
 import axios from "axios";
-
+import { Toast } from "vant";
 export default {
   name: "Header",
   data() {
     return {
       albumList: [],
-      liveAlbumList: []
+      liveAlbumList: [],
+      show: false,
+      actions: [{ name: "选项" }, { name: "选项" }, { name: "选项" }],
+      types: [
+        {
+          text: "Audio-lab",
+          img: "http://139.224.35.205/njlizhi/music/F/cover.jpg"
+        },
+        {
+          text: "live",
+          img: "http://139.224.35.205/njlizhi/music/%E5%8C%97%E4%BA%AC%E4%B8%8D%E6%8F%92%E7%94%B5%E7%8E%B0%E5%9C%BA/cover.jpg"
+        }
+      ]
     };
   },
   methods: {
@@ -53,13 +56,12 @@ export default {
     },
     getAlbum() {
       axios
-        .get("http://47.100.177.143:8181/njlizhi/playlist" + ".json")
+        .get("http://139.224.35.205/njlizhi/playlist" + ".json")
         .then(this.getAlbumSuc);
-      // axios.get('https://sunly.in/music/njlizhi/studio_album.json').then(this.getAlbumSuc)
     },
     getLiveAlbum() {
       axios
-        .get("http://47.100.177.143:8181/njlizhi/liveplaylist" + ".json")
+        .get("http://139.224.35.205/njlizhi/liveplaylist" + ".json")
         .then(this.getLiveAlbumSuc);
     },
     getAlbumSuc(res) {
@@ -67,7 +69,7 @@ export default {
         let data = res.data;
         let albumList = [];
         for (let i = 0; i < data.length; i++) {
-          albumList.push(data[i].name);
+          albumList.push({ name: data[i].name });
         }
         this.$emit("firstAlbum", albumList[0]);
         this.albumList = albumList;
@@ -78,11 +80,28 @@ export default {
         let data = res.data;
         let liveAlbumList = [];
         for (let i = 0; i < data.length; i++) {
-          liveAlbumList.push(data[i].name);
+          liveAlbumList.push({ name: data[i].name });
         }
         this.$emit("firstAlbum", liveAlbumList[0]);
         this.liveAlbumList = liveAlbumList;
       }
+    },
+    onCancel() {
+      this.show = false;
+    },
+    onActive(type) {
+      if (type === "Audio-lab") {
+        this.actions = this.albumList;
+      }
+      if (type === "live") {
+        this.actions = this.liveAlbumList;
+      }
+      this.show = true;
+    },
+    onSelect(item) {
+      this.show = false;
+      Toast(item.name + "已加入播放列表");
+      this.handleClickAlbum(item.name);
     }
   },
   mounted() {
@@ -94,30 +113,8 @@ export default {
 
 
 <style>
-.el-row {
-  margin-bottom: 20px;
+.font {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
-.el-col {
-  border-radius: 4px;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.el-header {
-    padding: 0 20px;
-}
-.container {
-    width: 1140px;
-    padding: 0;
-    margin: 0 auto;
-}
-.el-menu-demo{
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-}
-
 </style>

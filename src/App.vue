@@ -9,7 +9,7 @@
 <script>
     import HeaderTemp from './components/Header'
     import Player from './components/Player'
-    //import FooterTemp from './components/Footer'
+    import FooterTemp from './components/Footer'
     import About from './components/About'
 
     export default {
@@ -23,7 +23,7 @@
         components: {
             HeaderTemp,
             Player,
-            //FooterTemp,
+            FooterTemp,
             About
         },
         methods: {

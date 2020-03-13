@@ -1,13 +1,34 @@
 # vue-music-player
 
-基于开源的vue的音乐播放器（[原仓库](https://github.com/sjx1995/vue-music-player)）进行二次修改，
+基于vue和[vue-aplayer](https://github.com/SevenOutman/vue-aplayer)的简单音乐播放器
+
+使用[vant](https://github.com/youzan/vant)作为样式框架
+
 无后端服务器，基于nginx暴露出静态json文件作为数据来源。
 
 献给我们曾经度过的青春。
 
+## 页面预览
+
+
+
+![image-20200313235619906](images/image-20200313235619906.png)
+
+
+
+点击封面选择歌曲
+
+![image-20200313235707262](images/image-20200313235707262.png)
+
 -----------------------------------------------
 
-一个基于vue的音乐播放网站
+
+
+选择专辑进行播放
+
+
+
+![image-20200313235738521](images/image-20200313235738521.png)
 
 ## 开始
 
@@ -27,19 +48,12 @@ npm run test
 // Lints and fixes files
 npm run lint
 ```
-## 使用GitHUb API驱动音乐列表
+## TODO
 
-- 获取仓库一级目录内容：
-    https://api.github.com/repos/app-AZ/njlizhi/contents
-    
-- 获取仓库子目录内容：
-    https://api.github.com/repos/app-AZ/njlizhi/contents/directory
+- 取消json文件，增加后端支持
+- 增加歌词数据
 
-## 更新
+## 致谢
 
-- 2019.6.19 使用gitHub api为数据提供支持，可以收听全部录音室专辑
+项目前身源于：https://github.com/sjx1995/vue-music-player
 
-## 谢谢
-
-- 原音乐资源来源：
-    https://github.com/app-AZ/njlizhi
