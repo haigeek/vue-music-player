@@ -8,6 +8,22 @@ import { Grid, GridItem } from 'vant';
 import { Image } from 'vant';
 import { ActionSheet } from 'vant';
 import { Toast } from 'vant';
+import { Cell, CellGroup } from 'vant';
+import APlayer from '@moefe/vue-aplayer';
+import { Switch } from 'vant';
+import { Icon } from 'vant';
+
+Vue.use(Icon);
+
+Vue.use(Switch);
+
+Vue.use(APlayer, {
+  defaultCover: 'http://test.haigeek.xyz/njlizhi/music/default.png',
+  productionTip: true,
+});
+
+Vue.use(Cell);
+Vue.use(CellGroup);
 
 
 Vue.use(Toast);

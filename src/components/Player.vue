@@ -1,22 +1,25 @@
 <template>
   <van-row>
     <van-col span="2"></van-col>
+
     <van-col span="20">
-      <van-divider class="font">the album of {{this.albumName}} </van-divider>
+      <van-divider class="font">the album of {{this.albumName}}</van-divider>
+
       <aplayer
-        class="van-tabbar--fixed"
-        autoplay
-        shuffle
-        repeat="list"
-        listFolded
-        :music="{
-      title: songsArr[0].title,
-      artist: songsArr[0].artist,
-      src: songsArr[0].src,
-      pic: coverUrl
-      }"
-        :list="songsArr"
+        :audio="songList"
+        :autoplay="autoplay"
+        :lrcType="3"
+        :loop.sync="loop"
+        :order.sync="order"
+        :volume.sync="volume"
+        :listFolded.sync="listFolded"
+        :Preload="Preload"
       />
+
+      <van-divider class="font">播放设置</van-divider>
+      <van-cell center title="使用选择的专辑作为播放列表">
+        <van-switch v-model="checked" slot="right-icon" size="24" />
+      </van-cell>
     </van-col>
 
     <van-col span="2"></van-col>
@@ -26,30 +29,31 @@
 
 <script>
 import axios from "axios";
-// import Aplayer from "vue-aplayer";
-const Aplayer = ()=>import('vue-aplayer')
 export default {
   name: "Player",
-  components: {
-    Aplayer
-  },
+  // components: {
+  //   Aplayer
+  // },
   data() {
     return {
-      songsArr: [],
-      coverUrl: "",
-      srcName: "",
-      volume: 1,
+      audio: {
+        name: "东西（Cover：林俊呈）",
+        artist: "纳豆",
+        url: "https://cdn.moefe.org/music/mp3/thing.mp3",
+        cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
+        lrc: "https://cdn.moefe.org/music/lrc/thing.lrc"
+      },
+      loop: "all",
+      order: "list",
+      volume: 0.7,
+      listFolded: false,
       autoplay: true,
       muted: false,
-      listFolded: true,
-      mini: false,
-      alubArr: [],
-      title: null,
-      artist: "无艺术家",
-      src: "" ,
-      pic: "",
-      albumName: "我爱南京"
-
+      checked: true,
+      songList: [],
+      coverUrl: "",
+      srcName: "",
+      Preload: "none"
     };
   },
   props: {
@@ -61,18 +65,17 @@ export default {
   watch: {
     albumName() {
       this.coverUrl =
-        "http://127.0.0.1/njlizhi/music/" + this.albumName + "/cover.jpg";
+        "http://test.haigeek.xyz/njlizhi/music/" + this.albumName + "/cover.jpg";
       this.getSongs();
     }
   },
 
   methods: {
     getSongs() {
-      var arr = Object.keys(this.albumName);
       if (this.albumName) {
         axios
           .get(
-            "http://127.0.0.1/njlizhi/studio_album/" +
+            "http://test.haigeek.xyz/njlizhi/studio_album/" +
               this.albumName +
               ".json"
           )
@@ -80,28 +83,31 @@ export default {
       }
     },
     getSongsSuc(res) {
-      let songsArr = [];
       if (res && res.status === 200) {
         let data = res.data;
+        if (this.checked == true) {
+          this.songList = [];
+        }
+
         for (let i = 0; i < data.length; i++) {
           let songDetail = {};
-          songDetail.title = data[i].title;
+          // songDetail.title = data[i].title;
+          songDetail.name = data[i].title;
           songDetail.artist = data[i].artist;
-          songDetail.src =
-            "http://127.0.0.1/njlizhi/music/" +
+          songDetail.url =
+            "http://test.haigeek.xyz/njlizhi/music/" +
             this.albumName +
             "/" +
             data[i].src;
-          songDetail.pic =
-            "http://127.0.0.1/njlizhi/music/" +
+          songDetail.cover =
+            "http://test.haigeek.xyz/njlizhi/music/" +
             this.albumName +
             "/" +
             data[i].pic;
           songDetail.lrc = data[i].lrc;
-          songsArr.push(songDetail);
+          this.songList.push(songDetail);
         }
       }
-      this.songsArr = songsArr;
     },
     handleClickSongsName(item) {
       this.srcName = item.name;

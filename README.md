@@ -1,6 +1,6 @@
 # vue-music-player
 
-基于vue和[vue-aplayer](https://github.com/SevenOutman/vue-aplayer)的简单音乐播放器
+基于vue和[vue-aplayer](https://github.com/MoePlayer/vue-aplayer)的简单音乐播放器
 
 使用[vant](https://github.com/youzan/vant)作为样式框架
 
